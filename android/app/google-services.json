@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "123481924348",
+    "project_id": "dietdone-9bf47",
+    "storage_bucket": "dietdone-9bf47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123481924348:android:e66484421f138dda1eed79",
+        "android_client_info": {
+          "package_name": "com.dietdiet_done.dietdiet_done.diet_diet_done"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqKDejMgX7kTcvTN3kMZ2gRJSSqdtBdQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123481924348:android:c573764716b747341eed79",
+        "android_client_info": {
+          "package_name": "com.done.driver_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqKDejMgX7kTcvTN3kMZ2gRJSSqdtBdQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

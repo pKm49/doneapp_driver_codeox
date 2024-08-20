@@ -1,0 +1,1 @@
+enum VALIDORDER_STATUS { all, pending,delivered,not_delivered }

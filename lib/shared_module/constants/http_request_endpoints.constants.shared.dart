@@ -1,0 +1,10 @@
+const String SharedHttpRequestEndpoint_GetAccessToken = "/oauth2/access_token";
+const String SharedHttpRequestEndpoint_GetProfileData = "/driver/homescreen";
+const String SharedHttpRequestEndpoint_GetNotifications = "/driver/notifications/";
+const String SharedHttpRequestEndpoint_GetDriverOrders = "/driver/orders";
+const String SharedHttpRequestEndpoint_SendOTP = "/driver/send_otp";
+const String SharedHttpRequestEndpoint_OrderNotDelivered = "/driver/not_delivered";
+const String SharedHttpRequestEndpoint_OrderDelivered = "/driver/driver/delivered";
+const String SharedHttpRequestEndpoint_VerifyOTP = "/verify_otp";
+const String SharedHttpRequestEndpoint_GetSupportNumber = "/support";
+const String SharedHttpRequestEndpoint_SaveDeviceToken = "/driver/device_token";

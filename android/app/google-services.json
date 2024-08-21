@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:123481924348:android:3f92640e10848c4c1eed79",
+        "android_client_info": {
+          "package_name": "com.codeox.doneappdriver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqKDejMgX7kTcvTN3kMZ2gRJSSqdtBdQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:123481924348:android:e66484421f138dda1eed79",
         "android_client_info": {
           "package_name": "com.dietdiet_done.dietdiet_done.diet_diet_done"

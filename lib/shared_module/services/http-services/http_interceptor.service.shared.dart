@@ -22,8 +22,6 @@ class AppHttpInterceptor implements InterceptorContract {
       if (Bearer != null && Bearer != "") {
         request.headers["Authorization"] = "Bearer $Bearer";
       }
-      print("interceptRequest");
-      print(request.headers);
     } catch (e) {
       print(e);
     }
@@ -36,8 +34,7 @@ class AppHttpInterceptor implements InterceptorContract {
       {required BaseResponse response}) async {
     // TODO: implement interceptResponse
     try {
-      print("interceptResponse");
-      print(response.statusCode);
+
       if (response is Response) {
 
         var httpResponseBody = json.decode(response.body.toString());

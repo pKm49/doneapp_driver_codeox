@@ -25,8 +25,7 @@ class UserData {
 }
 
 UserData mapUserData(dynamic payload) {
-  print("mapUserData");
-  print(payload["bmi"]);
+
 
   List<GeneralItem> shifts = [];
   shifts.add(GeneralItem.GeneralItem(id: -1, name: "Select Shift", arabicName: "حدد التحول"));

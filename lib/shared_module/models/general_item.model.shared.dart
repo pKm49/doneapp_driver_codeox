@@ -21,8 +21,7 @@ class GeneralItem {
 }
 
 GeneralItem mapGeneralItem(dynamic payload){
-  debugPrint("mapGeneralItem");
-  debugPrint(payload.toString());
+
   return GeneralItem.GeneralItem(
     id :payload["id"]??payload["meal_category_id"]??-1,
     name :payload["name"]??payload["meal_category_name"]??"",

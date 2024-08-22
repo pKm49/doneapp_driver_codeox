@@ -24,12 +24,9 @@ class PushNotificationController {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
     } else {
-      print('User declined or has not accepted permission');
     }
 
     RemoteMessage? initialMessage =
@@ -40,8 +37,7 @@ class PushNotificationController {
 
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) {
-        debugPrint("onMessageOpenedApp triggered");
-        debugPrint(message.toString());
+
         PushNotificationService()
             .onActionReceivedImplementationMethod(message.data);
       },

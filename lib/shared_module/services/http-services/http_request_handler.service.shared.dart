@@ -11,9 +11,6 @@ import 'http_interceptor.service.shared.dart';
 
 getRequest(endpoint, parameters) async {
   try {
-    print("getRequest called");
-    print(endpoint);
-    print(parameters);
 
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
@@ -21,12 +18,7 @@ getRequest(endpoint, parameters) async {
 
     final httpResponse = await http
         .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print(parameters);
 
-    print("httpResponse");
-    print(httpResponse.body);
-    print("httpResponse");
 
     var httpResponseBody = json.decode(httpResponse.body);
 
@@ -55,18 +47,12 @@ getRequest(endpoint, parameters) async {
 }
 
 postRequest(endpoint, body) async {
-  print("postRequest called");
-  print(endpoint);
-  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-  print(body);
+
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("postRequest called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print("update_customer_profile request");
-    print(endpoint.toString().contains('update_customer_profile'));
+
     late var httpResponse;
     if(endpoint.toString().contains('update_customer_profile')){
       // print("update_customer_profile contains update_customer_profile");
@@ -82,12 +68,7 @@ postRequest(endpoint, body) async {
       );
     }
 
-    print("postRequest called pass 2");
 
-    print("post body");
-    print(json.encode(body));
-    print(httpResponse.body);
-    print(httpResponse.statusCode);
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
@@ -120,18 +101,12 @@ postRequest(endpoint, body) async {
 }
 
 patchRequest(endpoint, body) async {
-  print("patch.Request called");
-  print(endpoint);
-  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-  print(body);
+
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("patch.Request called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
-    print("update_customer_profile request");
-    print(endpoint.toString().contains('update_customer_profile'));
+
     late var httpResponse;
     if(endpoint.toString().contains('update_customer_profile') || endpoint.toString().contains('delivered')){
       // print("update_customer_profile contains update_customer_profile");
@@ -149,11 +124,7 @@ patchRequest(endpoint, body) async {
       );
     }
 
-    print("patch.Request called pass 2");
-    print("patch. body");
-    print(json.encode(body));
-    print(httpResponse.body);
-    print(httpResponse.statusCode);
+
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
@@ -190,8 +161,7 @@ deleteRequest(endpoint,parameters) async {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-    print("deleteRequest called pass 1");
-    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
+
     final httpResponse =
     await http.delete(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
 
@@ -226,10 +196,8 @@ generateErrorResponse(String errorMessage) {
 
 generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
 
-  print("generateSuccessResponse");
   // print(httpResponseBody);
   var result = httpResponseBody['result'] != null ?httpResponseBody['result']:httpResponseBody  ;
-  print(result.toString());
   if(result is String && result.toString().contains('UNAUTHORIZED')){
     return generateErrorResponse('UnAuthorized');
   }
@@ -252,12 +220,7 @@ generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
         :(result  != null && result['payload']  != null)
         ? result['payload']
         : result;
-    print("statusCode");
-    print(statusCode);
-    print("message");
-    print(message);
-    print("data");
-    print(data);
+
     AppHttpResponse poundHttpResponse = AppHttpResponse(
         statusCode:(result  != null && result['statusCode']  != null)
             ? result['statusCode']

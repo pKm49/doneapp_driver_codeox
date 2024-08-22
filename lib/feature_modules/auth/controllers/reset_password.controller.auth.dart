@@ -21,8 +21,7 @@ class ResetPasswordController extends GetxController {
   resetPassword() async {
     isResetingPassword.value = true;
     var authHttpService = new AuthHttpService();
-    print("resetting password");
-    print(mobile);
+
     bool isResetSuccess = await authHttpService.resetPassword( "${mobile}",
         passwordTextEditingController.value.text);
     isResetingPassword.value = false;

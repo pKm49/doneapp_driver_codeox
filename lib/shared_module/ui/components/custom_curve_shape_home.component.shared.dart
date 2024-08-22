@@ -106,8 +106,7 @@ clipper: CustomClipPath(),
 
   String getGreetingText() {
     DateTime currentDate = DateTime.now();
-    print("currentDate.hour");
-    print(currentDate.hour);
+
     if(currentDate.hour<12){
       return "good_morning";
     }else if(currentDate.hour<16){

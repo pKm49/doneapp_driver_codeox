@@ -29,7 +29,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
   PushNotificationService().initNotification();
   PushNotificationService().handleFcmNotification(message);
-  print("Handling a background message: ${message.messageId}");
 }
 
 Future<void> main() async {

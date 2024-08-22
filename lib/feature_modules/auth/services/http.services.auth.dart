@@ -34,10 +34,7 @@ class AuthHttpService {
         "mobile": mobile,
         "new_password": newPassword
       });
-      print("resetPassword data");
-      print(response.data);
-      print(response.message);
-      print(response.statusCode);
+
       showSnackbar(Get.context!, response.message,response.statusCode != 200? "error":"info");
 
       return response.statusCode == 200;

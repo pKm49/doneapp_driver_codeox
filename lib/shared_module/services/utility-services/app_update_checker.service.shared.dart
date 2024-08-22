@@ -56,8 +56,7 @@ class AppUpdateChecker {
 
     int appVersionCode = int.parse(packageInfo.buildNumber);
     int storeVersionCode = await getAndroidStoreVersion(appVersionCode);
-    print("appVersionCode $appVersionCode");
-    print("storeVersionCode $storeVersionCode");
+
     final uri = Uri.https("play.google.com", "/store/apps/details",
         {"id": env.playStorePackageId, "hl": "en"});
 
@@ -81,13 +80,13 @@ class AppUpdateChecker {
     var uri = Uri.https("itunes.apple.com", "/lookup", parameters);
     final response = await http.get(uri);
     if (response.statusCode != 200) {
-      print('Failed to query iOS App Store');
+
       return null;
     }
     final jsonObj = json.decode(response.body);
     final List results = jsonObj['results'];
     if (results.isEmpty) {
-      print('Can\'t find an app in the App Store with the id: $id');
+
       return null;
     }
     return VersionStatus(
@@ -108,13 +107,12 @@ class AppUpdateChecker {
     var uri = Uri.https("itunes.apple.com", "/lookup", parameters);
     final response = await http.get(uri);
     if (response.statusCode != 200) {
-      print('Failed to query iOS App Store');
+
       return null;
     }
     final jsonObj = json.decode(response.body);
     final List results = jsonObj['results'];
     if (results.isEmpty) {
-      print('Can\'t find an app in the App Store with the id: $bundleID');
       return null;
     }
     return jsonObj['results'][0]['trackViewUrl'];
@@ -126,14 +124,10 @@ class AppUpdateChecker {
   Future<int> getAndroidStoreVersion(int appVersionCode) async {
     try {
       AppUpdateInfo appUpdateInfo = await InAppUpdate.checkForUpdate();
-      debugPrint("getAndroidStoreVersion");
-      debugPrint(appUpdateInfo.packageName);
-      debugPrint(appUpdateInfo.availableVersionCode.toString());
-      debugPrint(appUpdateInfo.updateAvailability.toString());
+
       return appUpdateInfo.availableVersionCode ?? 0;
     } catch (e) {
-      debugPrint("getAndroidStoreVersion");
-      debugPrint(e.toString());
+
       return 0;
     }
   }
@@ -220,8 +214,7 @@ class VersionStatus {
 
     final local = localVersion.split('.').join();
     final store = storeVersion.split('.').join();
-    debugPrint("local version $local");
-    debugPrint("store version $store");
+
     if(int.parse(store)>int.parse(local)){
       return true;
     }

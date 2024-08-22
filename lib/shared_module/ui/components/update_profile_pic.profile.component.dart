@@ -21,8 +21,6 @@ class UpdateProfilePic extends StatelessWidget {
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
-    print("profilePictureUrl");
-    print(profilePictureUrl);
     return InkWell(
       onTap: onClick,
       child: Container(

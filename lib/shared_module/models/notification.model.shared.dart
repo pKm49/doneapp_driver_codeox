@@ -29,8 +29,7 @@ AppNotification mapAppNotification(dynamic payload) {
         ?getParsableDate(payload["datetime"])
         : DateTime(1900,1,1);
   } catch (e) {
-    print("mapNotification error");
-    print(e);
+
     dateTime = DateTime(1900,1,1);
   }
 

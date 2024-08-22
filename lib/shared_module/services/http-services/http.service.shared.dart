@@ -18,9 +18,7 @@ class SharedHttpService {
     params["client_secret"] = env.clientSecret;
     AppHttpResponse response = await getRequest(
         SharedHttpRequestEndpoint_GetAccessToken, params);
-    print("response is");
-    print(response.statusCode);
-    print(response.message);
+
     return;
   }
 
@@ -30,8 +28,7 @@ class SharedHttpService {
       params["mobile"] = mobile;
       AppHttpResponse response =
       await getRequest(SharedHttpRequestEndpoint_GetProfileData, params);
-      print("getProfileData");
-      print(response.data);
+
       if (response.statusCode == 200 && response.data != null) {
         return mapUserData(response.data[0]);
       }
@@ -174,9 +171,7 @@ class SharedHttpService {
     try{
       AppHttpResponse response =
       await getRequest(SharedHttpRequestEndpoint_GetSupportNumber,null);
-      print("getSupportNumber");
-      print(response.statusCode);
-      print(response.data);
+
       if(response.statusCode == 200){
         return response.data;
       }

@@ -43,8 +43,6 @@ class PushNotificationService {
         onDidReceiveNotificationResponse:
             (NotificationResponse notificationResponse) async {
 
-              debugPrint("onDidReceiveNotificationResponse triggered");
-              debugPrint("payload is " + notificationResponse.payload.toString());
 
               final List<String> str =
               notificationResponse.payload!.replaceAll('{', '').replaceAll('}', '').split(',');
@@ -73,8 +71,6 @@ class PushNotificationService {
 
   Future<void> onActionReceivedImplementationMethod(
       Map<String, dynamic> data) async {
-    debugPrint("onActionReceivedImplementationMethod triggered");
-    debugPrint(data.toString());
 
   }
 
@@ -88,13 +84,10 @@ class PushNotificationService {
   }
 
   Future handleFcmNotification(RemoteMessage? message) async {
-    debugPrint("FirebaseMessaging onMessage triggered");
-    debugPrint("payload is " + message!.data.toString());
 
-    final RemoteNotification? notification = message.notification;
-    final Map<String, dynamic> data = message.data;
-    final AndroidNotification? android = message.notification?.android;
-    final AppleNotification? apple = message.notification?.apple;
+    final RemoteNotification? notification = message?.notification;
+    final AndroidNotification? android = message?.notification?.android;
+    final AppleNotification? apple = message?.notification?.apple;
     String logoPath =
         "https://lh3.googleusercontent.com/4h2XkERxolE4FL97S1AwPucH48MwqbrLc63B5PvunkPoVHd_X1bKPfILsmzy-ZHTEuQ";
     String imageUrl = logoPath;
@@ -138,7 +131,7 @@ class PushNotificationService {
               styleInformation: bigPictureStyleInformation),
           iOS: const DarwinNotificationDetails(),
         ),
-        payload: message.data.toString(),
+        payload: message?.data.toString(),
       );
     }
 

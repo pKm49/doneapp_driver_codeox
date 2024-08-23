@@ -30,21 +30,20 @@ class MyOrder {
 
 MyOrder mapMyOrder(dynamic payload) {
   return MyOrder(
-    name: payload["name"] != null ? payload["name"].toString() : "",
-    arabicName:
-        payload["arabic_name"] != null ? payload["arabic_name"].toString() : "",
+    name: (payload["name"] != null  && payload["name"] != false)?  payload["name"].toString() : "",
+    arabicName: (payload["arabic_name"] != null  && payload["arabic_name"] != false)  ? payload["arabic_name"].toString() : "",
     image: payload["image"] != null ? payload["image"].toString() : "",
-    id: payload["id"] != null ? payload["id"] : -1,
+    id: payload["id"] ?? -1,
     street: payload["street"] ?? "",
     area: payload["area"] != null
         ? payload["area"].toString() == 'false'
-            ? ''
-            : payload["area"].toString()
+        ? ''
+        : payload["area"].toString()
         : "",
     areaArabic: payload["area_arabic"] != null
         ? payload["area_arabic"].toString() == 'false'
-            ? ''
-            : payload["area_arabic"].toString()
+        ? ''
+        : payload["area_arabic"].toString()
         : "",
     jedha: payload["jedha"] != null ? payload["jedha"].toString() : "",
     houseNumber: payload["house_number"] != null
@@ -54,6 +53,6 @@ MyOrder mapMyOrder(dynamic payload) {
         ? payload["floor_number"].toString()
         : "",
     status: payload["status"] != null ? payload["status"].toString() : "",
-    mobile: payload["phone"] != null ? payload["phone"].toString() : "",
+    mobile: (payload["phone"] != null  && payload["phone"] != false)? payload["phone"].toString() : "",
   );
 }

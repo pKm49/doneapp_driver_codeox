@@ -2,8 +2,7 @@ import 'package:doneapp_driver/feature_modules/auth/ui/login.page.auth.dart';
 import 'package:doneapp_driver/feature_modules/auth/ui/reset-password/reset_password.page.auth.dart';
 import 'package:doneapp_driver/order_details.page.core.dart';
 import 'package:doneapp_driver/orders.page.core.dart';
-import 'package:doneapp_driver/shared_module/ui/pages/about.page.profile.dart';
-import 'package:doneapp_driver/shared_module/ui/pages/settings.page.profile.dart';
+ import 'package:doneapp_driver/shared_module/ui/pages/settings.page.profile.dart';
 import 'package:doneapp_driver/gif_splash.page.core.dart';
 import 'package:doneapp_driver/landing.page.core.dart';
 import 'package:doneapp_driver/notifications.page.core.dart';
@@ -48,10 +47,7 @@ AppPages() => [
         name: AppRouteNames.notificationsRoute,
         page: () => NotificationsPage_Core(),
       ),
-      GetPage(
-        name: AppRouteNames.aboutPageRoute,
-        page: () => AboutPage_Profile(),
-      ),
+
       GetPage(
         name: AppRouteNames.settingsPageRoute,
         page: () => SettingsPage_Profile(),

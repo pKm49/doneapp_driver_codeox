@@ -189,25 +189,28 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                   ),
 
                 ),
-                addVerticalSpace(APPSTYLE_SpaceSmall),
-                Padding(padding: APPSTYLE_LargePaddingHorizontal,
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton(
+                 Visibility(
+                  visible: sharedController.selectedOrder.value.mobile !="",
+                  child: Padding(
+                    padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceSmall),
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton(
 
-                          child:  Row(
-                            children: [
-                              Icon(Ionicons.call,color: APPSTYLE_PrimaryColor,),
-                              addHorizontalSpace(APPSTYLE_SpaceMedium),
-                              Text('contact_customer'.tr,
-                                  style: getHeadlineMediumStyle(context).copyWith(
-                                      color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
-                                  textAlign: TextAlign.center),
-                            ],
-                          ),
-                          onPressed: () {
-                            handleCustomerContactClick(context,sharedController.selectedOrder.value.mobile);
-                          })),),
+                            child:  Row(
+                              children: [
+                                Icon(Ionicons.call,color: APPSTYLE_PrimaryColor,),
+                                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                Text('contact_customer'.tr,
+                                    style: getHeadlineMediumStyle(context).copyWith(
+                                        color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
+                                    textAlign: TextAlign.center),
+                              ],
+                            ),
+                            onPressed: () {
+                              handleCustomerContactClick(context,sharedController.selectedOrder.value.mobile);
+                            })),),
+                ),
                 addVerticalSpace(APPSTYLE_SpaceLarge*2),
 
                 Visibility(

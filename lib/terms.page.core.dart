@@ -7,10 +7,18 @@ import 'package:doneapp_driver/shared_module/ui/components/custom_back_button.co
 import 'package:doneapp_driver/shared_module/ui/components/custom_curve_shape.component.shared.dart';
 import 'package:doneapp_driver/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
-class TermsPage_Core extends StatelessWidget {
+class TermsPage_Core extends StatefulWidget {
   const TermsPage_Core({super.key});
+
+  @override
+  State<TermsPage_Core> createState() => _TermsPage_CoreState();
+}
+
+class _TermsPage_CoreState extends State<TermsPage_Core> {
+  late InAppWebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -25,34 +33,47 @@ class TermsPage_Core extends StatelessWidget {
         title: Row(
           children: [
             CustomBackButton(isPrimaryMode:false),
-
-          ],
-        ),
-        actions: [
-          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_BackgroundWhite),
-          addHorizontalSpace(APPSTYLE_SpaceLarge)
-        ],
-      ) ,
-      body: SafeArea(
-        child: Column(
-          children: [
-            CustomCurveShapeComponent_Shared(
-              color: APPSTYLE_PrimaryColor,
-              title: "terms_n_conditions".tr ,
-            ),
             Expanded(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: APPSTYLE_LargePaddingAll,
-                    child: Text("terms".tr,style: getBodyMediumStyle(context)),
-                  )
-
-                ],
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'terms_n_conditions'.tr,
+                  style: getHeadlineLargeStyle(context).copyWith(
+                      fontWeight: APPSTYLE_FontWeightBold,
+                      color: APPSTYLE_BackgroundWhite),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
+            )
           ],
         ),
+      ) ,
+      body: InAppWebView(
+        initialUrlRequest: URLRequest(url:WebUri("https://diet-steps.code-ox.com/terms") ),
+        initialOptions: InAppWebViewGroupOptions(
+            crossPlatform: InAppWebViewOptions(
+            )
+        ),
+        onReceivedServerTrustAuthRequest: (controller, challenge) async {
+          return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
+        },
+        onWebViewCreated: (InAppWebViewController controller) {
+          controller = _controller;
+        },
+        onUpdateVisitedHistory: (InAppWebViewController controller, Uri? url, bool? flag) {
+
+        },
+        onLoadStart: (InAppWebViewController controller, Uri? url) {
+
+        },
+        onLoadStop: (InAppWebViewController controller, Uri? url) async {
+
+        },
+        onProgressChanged: (InAppWebViewController controller, int progress) {
+
+
+
+        },
       ),
     );
   }

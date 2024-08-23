@@ -14,7 +14,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MyProfilePage_Profile extends StatelessWidget {
-    MyProfilePage_Profile({super.key});
+  MyProfilePage_Profile({super.key});
   final sharedController = Get.find<SharedController>();
 
   @override
@@ -39,7 +39,7 @@ class MyProfilePage_Profile extends StatelessWidget {
             Container(
 
               padding: APPSTYLE_LargePaddingAll.copyWith(
-                top: screenheight*.08
+                  top: screenheight*.08
               ),
               child: Column(
                 children: [
@@ -170,30 +170,14 @@ class MyProfilePage_Profile extends StatelessWidget {
                           ),
                         ),
 
-                        SizedBox(
-                          width: double.infinity,
-                          child: PrePostIconButton(
-                            specialColor: 0,
-                            onPressed: () {
-                                Get.toNamed(AppRouteNames.aboutPageRoute);
-                            },
-                            theme: 'dark',
-                            border: '',
-                            buttonTitle: "about_diet_done".tr,
-                            preIconData: Ionicons.help_circle_outline,
-                            postIconData:Localizations.localeOf(context)
-                                .languageCode
-                                .toString() ==
-                                'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                          ),
-                        ),
+
                         SizedBox(
                           width: double.infinity,
                           child: PrePostIconButton(
 
                             specialColor: 0,
                             onPressed: () {
-                               Get.toNamed(AppRouteNames.settingsPageRoute);
+                              Get.toNamed(AppRouteNames.settingsPageRoute);
                             },
                             theme: 'dark',
                             border: '',
@@ -205,6 +189,26 @@ class MyProfilePage_Profile extends StatelessWidget {
                                 'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                           ),
                         ),
+
+                        SizedBox(
+                          width: double.infinity,
+                          child: PrePostIconButton(
+
+                            specialColor: 0,
+                            onPressed: () {
+                              Get.toNamed(AppRouteNames.privacyRoute);
+                            },
+                            theme: 'dark',
+                            border: '',
+                            buttonTitle: "privacy_policies".tr,
+                            preIconData: Ionicons.lock_closed_outline,
+                            postIconData:Localizations.localeOf(context)
+                                .languageCode
+                                .toString() ==
+                                'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                          ),
+                        ),
+                        addVerticalSpace(APPSTYLE_SpaceLarge ),
 
                       ],
                     ),
@@ -234,56 +238,56 @@ class MyProfilePage_Profile extends StatelessWidget {
       ),
     );
   }
-    void showLogoutConfirmDialogue(BuildContext context ) async {
+  void showLogoutConfirmDialogue(BuildContext context ) async {
 
-      final dialogTitleWidget = Text('confirm_logout'.tr,style: getHeadlineMediumStyle(context).copyWith(
-          color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
-      final dialogTextWidget = Text(  'confirm_logout_message'.tr,style: getBodyMediumStyle(context),
-      );
+    final dialogTitleWidget = Text('confirm_logout'.tr,style: getHeadlineMediumStyle(context).copyWith(
+        color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text(  'confirm_logout_message'.tr,style: getBodyMediumStyle(context),
+    );
 
-      final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
-      final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
+    final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
+    final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
 
-      updateLogoutAction() async {
-        sharedController.handleLogout();
-      }
-
-      updateAction() {
-        Navigator.pop(context);
-      }
-      List<Widget> actions = [
-
-        TextButton(
-            onPressed:updateAction,
-            style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.symmetric(
-                    horizontal: APPSTYLE_SpaceLarge,
-                    vertical: APPSTYLE_SpaceSmall))),
-            child:  updateButtonCancelTextWidget),
-
-        TextButton(
-            onPressed:updateLogoutAction,
-            style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.symmetric(
-                    horizontal: APPSTYLE_SpaceLarge,
-                    vertical: APPSTYLE_SpaceSmall))),
-            child:  updateButtonTextWidget),
-      ];
-
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return WillPopScope(
-              child: AlertDialog(
-                title: dialogTitleWidget,
-                content: dialogTextWidget,
-                actions: actions,
-              ),
-              onWillPop: () => Future.value(false));
-        },
-      );
+    updateLogoutAction() async {
+      sharedController.handleLogout();
     }
+
+    updateAction() {
+      Navigator.pop(context);
+    }
+    List<Widget> actions = [
+
+      TextButton(
+          onPressed:updateAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonCancelTextWidget),
+
+      TextButton(
+          onPressed:updateLogoutAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget),
+    ];
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            child: AlertDialog(
+              title: dialogTitleWidget,
+              content: dialogTextWidget,
+              actions: actions,
+            ),
+            onWillPop: () => Future.value(false));
+      },
+    );
+  }
 
 
 }

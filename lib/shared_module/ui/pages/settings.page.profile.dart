@@ -1,5 +1,7 @@
 
 
+ import 'package:app_settings/app_settings.dart';
+import 'package:doneapp_driver/shared_module/controllers/controller.shared.dart';
  import 'package:doneapp_driver/shared_module/ui/components/preposticon_button.component.shared.dart';
 import 'package:doneapp_driver/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp_driver/shared_module/constants/style_params.constants.shared.dart';
@@ -7,13 +9,13 @@ import 'package:doneapp_driver/shared_module/constants/widget_styles.constants.s
 import 'package:doneapp_driver/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp_driver/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp_driver/shared_module/ui/components/custom_back_button.component.shared.dart';
-import 'package:doneapp_driver/shared_module/ui/components/update_profile_pic.profile.component.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class SettingsPage_Profile extends StatelessWidget {
-  const SettingsPage_Profile({super.key});
+    SettingsPage_Profile({super.key});
+  final sharedController = Get.find<SharedController>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,12 @@ class SettingsPage_Profile extends StatelessWidget {
                     isRemoveVerticalPadding:true,
                     specialColor: 0,
                     onPressed: () {
-                      // Get.toNamed(Approute_RefferalProgram_Profile);
+                      try {
+                        AppSettings.openAppSettings(type: AppSettingsType.notification);
+                        // await platform.invokeMethod('openNotificationSettings');
+                      } on Exception catch (e) {
+                        print(e);
+                      }
                     },
                     theme: 'dark',
                     border: '',
@@ -108,7 +115,7 @@ class SettingsPage_Profile extends StatelessWidget {
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            // sharedController.changeLanguage('en', false);
+                            sharedController.changeLanguage('en', false);
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -137,7 +144,7 @@ class SettingsPage_Profile extends StatelessWidget {
                         flex: 1,
                         child: InkWell(
                           onTap: () {
-                            // sharedController.changeLanguage('ar', false);
+                            sharedController.changeLanguage('ar', false);
 
                           },
                           child: Container(

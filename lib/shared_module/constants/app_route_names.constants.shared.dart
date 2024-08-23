@@ -85,8 +85,7 @@ class  AppRouteNames {
 
   static const String mealSelectionRoute = '/meal-selection';
 
-  static const String aboutPageRoute = '/about';
-  static const String settingsPageRoute = '/settings';
+   static const String settingsPageRoute = '/settings';
 
   static const String aboutRoute = '/about-nutricc';
 

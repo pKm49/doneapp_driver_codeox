@@ -30,7 +30,7 @@ class HomePage_Core extends StatelessWidget {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Obx(
-      ()=> Scaffold(
+          ()=> Scaffold(
         appBar: AppBar(
           backgroundColor: APPSTYLE_BackgroundWhite,
           automaticallyImplyLeading: false,
@@ -42,7 +42,7 @@ class HomePage_Core extends StatelessWidget {
               Visibility(
                 visible: !sharedController.isUserDataFetching.value,
                 child: UpdateProfilePic(
-                    isLarge:false,
+                  isLarge:false,
                   onClick: () {
                   },
                   borderColor: APPSTYLE_Black,
@@ -57,7 +57,7 @@ class HomePage_Core extends StatelessWidget {
                   child: Container(
                     height: screenwidth * .11,
                     width: screenwidth * .11,
-      
+
                     decoration:
                     APPSTYLE_BorderedContainerExtraSmallDecoration
                         .copyWith(
@@ -71,44 +71,44 @@ class HomePage_Core extends StatelessWidget {
                 visible:  sharedController.isUserDataFetching.value,
                 child: Expanded(
                     child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Shimmer.fromColors(
-                      baseColor: APPSTYLE_Grey20,
-                      highlightColor: APPSTYLE_Grey40,
-                      child: Container(
-      
-                        width: screenwidth*.4,
-                        height: 22,
-      
-                        decoration:
-                        APPSTYLE_BorderedContainerExtraSmallDecoration
-                            .copyWith(
-                            borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-                            border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                            color: APPSTYLE_Grey20
-                        ),),
-                    ),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                    Shimmer.fromColors(
-                      baseColor: APPSTYLE_Grey20,
-                      highlightColor: APPSTYLE_Grey40,
-                      child: Container(
-      
-                        width: screenwidth*.3,
-                        height: 16,
-      
-                        decoration:
-                        APPSTYLE_BorderedContainerExtraSmallDecoration
-                            .copyWith(
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                            color: APPSTYLE_Grey20
-                        ),),
-                    ),
-                  ],
-                )),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Shimmer.fromColors(
+                          baseColor: APPSTYLE_Grey20,
+                          highlightColor: APPSTYLE_Grey40,
+                          child: Container(
+
+                            width: screenwidth*.4,
+                            height: 22,
+
+                            decoration:
+                            APPSTYLE_BorderedContainerExtraSmallDecoration
+                                .copyWith(
+                                borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+                                border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                                color: APPSTYLE_Grey20
+                            ),),
+                        ),
+                        addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                        Shimmer.fromColors(
+                          baseColor: APPSTYLE_Grey20,
+                          highlightColor: APPSTYLE_Grey40,
+                          child: Container(
+
+                            width: screenwidth*.3,
+                            height: 16,
+
+                            decoration:
+                            APPSTYLE_BorderedContainerExtraSmallDecoration
+                                .copyWith(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                                color: APPSTYLE_Grey20
+                            ),),
+                        ),
+                      ],
+                    )),
               ),
               Visibility(
                 visible: !sharedController.isUserDataFetching.value,
@@ -239,18 +239,18 @@ class HomePage_Core extends StatelessWidget {
                     ],
                   ),
                 ),
-      
+
                 addVerticalSpace(APPSTYLE_SpaceLarge*2),
                 Padding(
                   padding: APPSTYLE_LargePaddingHorizontal,
                   child: Text("find_orders_assigned".tr,
                       textAlign: TextAlign.start,
                       style: getHeadlineLargeStyle(context).copyWith(
-      
+
                           color: APPSTYLE_Grey80)),
                 ),
                 addVerticalSpace(APPSTYLE_SpaceMedium),
-      
+
                 InkWell(
                   onTap: (){
                     _selectDate(context);
@@ -266,6 +266,8 @@ class HomePage_Core extends StatelessWidget {
                         addHorizontalSpace(APPSTYLE_SpaceSmall),
                         Expanded(
                           child: Text(
+                            isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1)))?
+                            "select_date".tr:
                             getShortFormattedDate(sharedController.selectedDate.value),
                             style: getBodyMediumStyle(context),
                           ),
@@ -302,7 +304,7 @@ class HomePage_Core extends StatelessWidget {
                             'select_shift'.tr,
                             style: TextStyle(height: .5),
                           ),
-      
+
                         ],
                       ),
                       DropDownSelector(
@@ -319,28 +321,32 @@ class HomePage_Core extends StatelessWidget {
                 ),
                 addVerticalSpace(APPSTYLE_SpaceMedium),
                 Padding(padding: APPSTYLE_LargePaddingHorizontal,
-                child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        child:sharedController.isOrdersFetching.value
-                            ? LoadingAnimationWidget.staggeredDotsWave(
-                          color: APPSTYLE_BackgroundWhite,
-                          size: 24,
-                        ):  Text('find_orders'.tr,
-                            style: getHeadlineMediumStyle(context).copyWith(
-                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                            textAlign: TextAlign.center),
-                        onPressed: () {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          if (sharedController.selectedShift.value.id !=-1 &&
-                              !sharedController.isOrdersFetching.value) {
-                            sharedController.getOrders(true);
-                          }else{
-                            if(sharedController.selectedShift.value.id ==-1){
-                              showSnackbar(context, "select_shift".tr, "error");
+                  child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          child:sharedController.isOrdersFetching.value
+                              ? LoadingAnimationWidget.staggeredDotsWave(
+                            color: APPSTYLE_BackgroundWhite,
+                            size: 24,
+                          ):  Text('find_orders'.tr,
+                              style: getHeadlineMediumStyle(context).copyWith(
+                                  color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                              textAlign: TextAlign.center),
+                          onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            if (sharedController.selectedShift.value.id !=-1 &&
+                                !isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1))) &&
+
+                                !sharedController.isOrdersFetching.value) {
+                              sharedController.getOrders(true);
+                            }else{
+                              if(isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1)))){
+                                showSnackbar(context, "select_date".tr, "error");
+                              }else if(sharedController.selectedShift.value.id ==-1){
+                                showSnackbar(context, "select_shift".tr, "error");
+                              }
                             }
-                          }
-                        })),)
+                          })),)
               ],
             ),
           ),
@@ -351,7 +357,8 @@ class HomePage_Core extends StatelessWidget {
 
   String getGreetingText() {
     DateTime currentDate = DateTime.now();
-
+    print("currentDate.hour");
+    print(currentDate.hour);
     if (currentDate.hour < 12) {
       return "good_morning";
     } else if (currentDate.hour < 16) {
@@ -364,11 +371,13 @@ class HomePage_Core extends StatelessWidget {
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: sharedController.selectedDate.value,
-        initialEntryMode: DatePickerEntryMode.calendarOnly, // <- this
-        firstDate:DateTime(2024),
-        lastDate: DateTime(2101),
+      context: context,
+      initialDate:isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1)))?
+      sharedController.selectedDate.value.add(Duration(days: 1)):
+      sharedController.selectedDate.value,
+      initialEntryMode: DatePickerEntryMode.calendarOnly, // <- this
+      firstDate:DateTime(2024),
+      lastDate: DateTime(2101),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -381,7 +390,7 @@ class HomePage_Core extends StatelessWidget {
         );
       },);
     if (picked != null && picked != sharedController.selectedDate.value  ) {
-       sharedController.changeDate(picked,false);
+      sharedController.changeDate(picked,false);
     }
   }
 

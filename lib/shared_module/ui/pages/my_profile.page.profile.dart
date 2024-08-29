@@ -1,4 +1,5 @@
 
+import 'package:doneapp_driver/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
 import 'package:doneapp_driver/shared_module/ui/components/preposticon_button.component.shared.dart';
 import 'package:doneapp_driver/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp_driver/shared_module/constants/asset_urls.constants.shared.dart';
@@ -55,8 +56,6 @@ class MyProfilePage_Profile extends StatelessWidget {
                               visible: !sharedController.isUserDataFetching.value,
                               child: UpdateProfilePic(
                                 isLarge:true,
-                                onClick: () {
-                                },
                                 borderColor: APPSTYLE_Black,
                                 profilePictureUrl: sharedController.userData.value.image,
                               ),
@@ -157,7 +156,13 @@ class MyProfilePage_Profile extends StatelessWidget {
                           child: PrePostIconButton(
                             specialColor: 0,
                             onPressed: () {
-                              Get.toNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [sharedController. mobile.value]);
+
+                              Get
+                                  .toNamed(
+                                  AppRouteNames
+                                      .otpVerificationMobileInputRoute,
+                                  arguments: [
+                                    VALIDPHONEVERIFICATION_MODES.reset_password ]);
                             },
                             theme: 'dark',
                             border: '',

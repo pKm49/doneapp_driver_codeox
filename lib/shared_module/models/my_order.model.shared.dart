@@ -11,6 +11,7 @@ class MyOrder {
   final String floorNumber;
   final String status;
   final String mobile;
+  final int queue;
 
   MyOrder({
     required this.id,
@@ -25,6 +26,7 @@ class MyOrder {
     required this.floorNumber,
     required this.status,
     required this.mobile,
+    required this.queue,
   });
 }
 
@@ -33,6 +35,7 @@ MyOrder mapMyOrder(dynamic payload) {
     name: (payload["name"] != null  && payload["name"] != false)?  payload["name"].toString() : "",
     arabicName: (payload["arabic_name"] != null  && payload["arabic_name"] != false)  ? payload["arabic_name"].toString() : "",
     image: payload["image"] != null ? payload["image"].toString() : "",
+    queue: (payload["queue_no"] != null && payload["queue_no"] != '')? payload["queue_no"]: -1,
     id: payload["id"] ?? -1,
     street: payload["street"] ?? "",
     area: payload["area"] != null

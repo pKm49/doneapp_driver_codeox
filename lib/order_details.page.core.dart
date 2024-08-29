@@ -31,25 +31,12 @@ class OrderDetailsPage_Core extends StatefulWidget {
 
 class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
   final sharedController = Get.find<SharedController>();
-  var getArguments = Get.arguments;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(getArguments == null){
-      showSnackbar(context, "cant_find_order".tr, "error");
-      Get.back();
-    }
-    if(getArguments[0] == null){
-      showSnackbar(context, "cant_find_order".tr, "error");
-      Get.back();
-    }
-    if(sharedController.myOrders.length<(getArguments[0]+1)){
-      showSnackbar(context, "cant_find_order".tr, "error");
-      Get.back();
-    }
-    sharedController.changeOrder(getArguments[0]);
+
   }
 
   @override
@@ -105,7 +92,7 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                 Icons.timer_outlined :
                 sharedController.selectedOrder.value.status == 'delivered'?
                 Icons.check_circle_outline :Icons.close,color: APPSTYLE_BackgroundWhite,
-                  size: APPSTYLE_FontSize16),
+                    size: APPSTYLE_FontSize16),
                 addHorizontalSpace(APPSTYLE_SpaceSmall),
 
                 addHorizontalSpace(APPSTYLE_SpaceExtraSmall),
@@ -129,7 +116,7 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
         ],
       ),
       body: Obx(
-        ()=> Container(
+            ()=> Container(
           width: screenwidth,
           height: screenheight,
           child: SafeArea(
@@ -150,8 +137,6 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                         children: [
                           UpdateProfilePic(
                             isLarge:false,
-                            onClick: () {
-                            },
                             borderColor: APPSTYLE_Black,
                             profilePictureUrl: sharedController.selectedOrder.value.image,
                           ),
@@ -165,6 +150,9 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                             sharedController.selectedOrder.value.name,style: getHeadlineMediumStyle(context).copyWith(
                               fontWeight: APPSTYLE_FontWeightBold
                           ),)),
+                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+
+                          Text('#${sharedController.selectedOrder.value.queue}',style: getHeadlineLargeStyle(context),)
 
                         ],
                       ),
@@ -189,7 +177,7 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                   ),
 
                 ),
-                 Visibility(
+                Visibility(
                   visible: sharedController.selectedOrder.value.mobile !="",
                   child: Padding(
                     padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceSmall),
@@ -218,8 +206,8 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                   child: Padding(
                     padding: APPSTYLE_LargePaddingHorizontal,
                     child: TextFormField(
-                      controller:  sharedController.commentsTextEditingController.value,
-                      minLines: 4,
+                        controller:  sharedController.commentsTextEditingController.value,
+                        minLines: 4,
                         maxLines: 4,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
@@ -234,30 +222,30 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
                 Visibility(
                   visible:sharedController.selectedOrder.value.status == "pending",
                   child: Padding(padding: APPSTYLE_LargePaddingHorizontal,
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(APPSTYLE_GuideGreen)
-                        ),
-                          child:sharedController.isOrderStatusUpdating.value && sharedController.orderStatus=='delivered'
-                              ? LoadingAnimationWidget.staggeredDotsWave(
-                            color: APPSTYLE_BackgroundWhite,
-                            size: 24,
-                          ):  Text('mark_as_delivered'.tr,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                              textAlign: TextAlign.center),
-                          onPressed: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            if (
-                                !sharedController.isOrderStatusUpdating.value) {
-                              sharedController.changeOrderStatus(
-                                  sharedController.selectedOrder.value.id,
-                                  true,
-                                  sharedController.commentsTextEditingController.value.text);
-                            }
-                          })),),
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(APPSTYLE_GuideGreen)
+                            ),
+                            child:sharedController.isOrderStatusUpdating.value && sharedController.orderStatus=='delivered'
+                                ? LoadingAnimationWidget.staggeredDotsWave(
+                              color: APPSTYLE_BackgroundWhite,
+                              size: 24,
+                            ):  Text('mark_as_delivered'.tr,
+                                style: getHeadlineMediumStyle(context).copyWith(
+                                    color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                                textAlign: TextAlign.center),
+                            onPressed: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              if (
+                              !sharedController.isOrderStatusUpdating.value) {
+                                sharedController.changeOrderStatus(
+                                    sharedController.selectedOrder.value.id,
+                                    true,
+                                    sharedController.commentsTextEditingController.value.text);
+                              }
+                            })),),
                 ),
                 Visibility(
                     visible:sharedController.selectedOrder.value.status == "pending",

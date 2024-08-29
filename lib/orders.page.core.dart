@@ -63,199 +63,200 @@ class OrdersPage_Core extends StatelessWidget {
           ),
         ),
         body:  Container(
-            width: screenwidth,
-            height: screenheight,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  addVerticalSpace(APPSTYLE_SpaceMedium ),
+          width: screenwidth,
+          height: screenheight,
+          child: SafeArea(
+            child: Column(
+              children: [
+                addVerticalSpace(APPSTYLE_SpaceMedium ),
 
 
-                  Container(
-                    padding: APPSTYLE_LargePaddingHorizontal,
-                    margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
-                    child: Row(
-                      children: [
-                        Expanded(
+                Container(
+                  padding: APPSTYLE_LargePaddingHorizontal,
+                  margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
+                  child: Row(
+                    children: [
+                      Expanded(
                           flex:2,
-                            child: InkWell(
-                              onTap: (){
-                                _selectDate(context);
-                              },
-                              child: Container(
-                                decoration:
-                                APPSTYLE_BorderedContainerExtraSmallDecoration,
-                                padding: APPSTYLE_SmallPaddingAll,
-                                child: Row(
-                                  children: [
-                                    Icon(Ionicons.calendar_outline),
-                                    addHorizontalSpace(APPSTYLE_SpaceSmall),
-                                    Expanded(
-                                      child: Text(
-                                          sharedController.selectedDate.value.isBefore(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day))?
-                                              "select_date".tr:
-                                        getShortFormattedDate(sharedController.selectedDate.value),
-                                        style: getBodyMediumStyle(context),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
-                        addHorizontalSpace(APPSTYLE_SpaceMedium),
-                        Expanded(
-                          flex: 1,
-                          child: DropDownSelector(
-                            titleText: 'shift'.tr,
-                            selected: sharedController.selectedShift.value.id,
-                            items: sharedController.userData.value.shifts,
-                            hintText: 'select_shift'.tr,
-                            valueChanged: (newShift) {
-                              sharedController.changeShif(int.parse(newShift),true);
+                          child: InkWell(
+                            onTap: (){
+                              _selectDate(context);
                             },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible:  !sharedController.isOrdersFetching.value && sharedController.myOrders.isEmpty,
-                    child: Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(1000),
-                                    color: APPSTYLE_Grey20,
-                                  ),
-                                  width: screenwidth * .3,
-                                  height: screenwidth * .3,
-                                  child: Center(
-                                    child: Icon(Icons.delivery_dining_outlined,
-                                        size: screenwidth * .15,
-                                        color: APPSTYLE_Grey80),
-                                  ),
-                                )
-                              ],
-                            ),
-                            addVerticalSpace(APPSTYLE_SpaceLarge),
-                            Text("no_orders".tr,
-                                style: getHeadlineMediumStyle(context)),
-                          ],
-                        )),
-                  ),
-                  Visibility(
-                    visible:  !sharedController.isOrdersFetching.value && sharedController.myOrders.isNotEmpty,
-                    child: Expanded(
-                        child: Container(
-                          child: ListView(
-                            children: [
-                              addVerticalSpace(APPSTYLE_SpaceMedium),
-                              for(var i=0;i<sharedController.myOrders.length;i++ )
-                                InkWell(
-                                  onTap:(){
-                                      Get.toNamed(AppRouteNames.ordersDetails,arguments: [i]);
-                                    },
-                                  child: Container(
-                                    decoration: APPSTYLE_ShadowedContainerSmallDecoration,
-                                    padding: APPSTYLE_MediumPaddingAll,
-                                    margin: APPSTYLE_LargePaddingHorizontal.copyWith(bottom: APPSTYLE_SpaceMedium),
-
-                                    child: Wrap(
-                                      runSpacing: APPSTYLE_SpaceSmall,
-                                      crossAxisAlignment: WrapCrossAlignment.start,
-                                      alignment: WrapAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            UpdateProfilePic(
-                                              isLarge:false,
-                                              onClick: () {
-                                              },
-                                              borderColor: APPSTYLE_Black,
-                                              profilePictureUrl: sharedController.myOrders[i].image,
-                                            ),
-                                            addHorizontalSpace(APPSTYLE_SpaceSmall),
-
-                                            Expanded(child: Text(
-                                              Localizations.localeOf(context)
-                                                  .languageCode
-                                                  .toString() ==
-                                                  'ar'?sharedController.myOrders[i].arabicName:
-                                              sharedController.myOrders[i].name,style: getHeadlineMediumStyle(context).copyWith(
-                                                fontWeight: APPSTYLE_FontWeightBold
-                                            ),)),
-
-                                          ],
-                                        ),
-                                        Divider(),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Image.asset(ASSETS_LOCATION,
-                                                width: 30),
-                                            addHorizontalSpace(APPSTYLE_SpaceSmall),
-                                            Expanded(child:
-                                            Text(
-                                                "${ sharedController.myOrders[i].area}, "
-                                                    " ${sharedController.myOrders[i].street} ${'street'.tr}, "
-                                                     "${sharedController.myOrders[i].jedha.trim()!='' ?('${sharedController.myOrders[i].jedha} '):''}${sharedController.myOrders[i].jedha.trim()!=''?('${'jedha'.tr},'):''}"
-                                                    "${sharedController.myOrders[i].houseNumber !=-1?'house_number'.tr:''} : ${sharedController.myOrders[i].houseNumber!=-1 ?sharedController.myOrders[i].houseNumber:''}"
-                                                    "${sharedController.myOrders[i].floorNumber !=-1?(', ${'floor_number'.tr} : '):''} ${sharedController.myOrders[i].floorNumber!=-1 ?sharedController.myOrders[i].floorNumber:''}" ,
-
-                                             style: getHeadlineMediumStyle(context)))
-
-                                          ],
-                                        ),
-                                        SizedBox(
-                                            width: double.infinity,
-                                            child: OutlinedButton(
-                                                style: ButtonStyle(
-                                                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: APPSTYLE_SpaceSmall,
-                                                            vertical:APPSTYLE_SpaceExtraSmall))),
-                                                child:  Row(
-                                                  children: [
-                                                    Icon(sharedController.myOrders[i].status == 'pending'?
-                                                      Icons.timer_outlined :
-                                                    sharedController.myOrders[i].status == 'delivered'?
-                                                    Icons.check_circle_outline :Icons.close,color: APPSTYLE_PrimaryColor,),
-                                                    addHorizontalSpace(APPSTYLE_SpaceMedium),
-                                                    Text(sharedController.myOrders[i].status == 'pending'?
-                                                    "pending".tr:
-                                                    sharedController.myOrders[i].status == 'delivered'?
-                                                    'delivered'.tr :'not_delivered'.tr,
-                                                        style: getHeadlineMediumStyle(context).copyWith(
-                                                            color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
-                                                        textAlign: TextAlign.center),
-                                                  ],
-                                                ),
-                                                onPressed: () {
-                                                 })),
-                                      ],
+                            child: Container(
+                              decoration:
+                              APPSTYLE_BorderedContainerExtraSmallDecoration,
+                              padding: APPSTYLE_SmallPaddingAll,
+                              child: Row(
+                                children: [
+                                  Icon(Ionicons.calendar_outline),
+                                  addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                  Expanded(
+                                    child: Text(
+                                      sharedController.selectedDate.value.isBefore(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day))?
+                                      "select_date".tr:
+                                      getShortFormattedDate(sharedController.selectedDate.value),
+                                      style: getBodyMediumStyle(context),
                                     ),
-
-                                  ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
+                      addHorizontalSpace(APPSTYLE_SpaceMedium),
+                      Expanded(
+                        flex: 1,
+                        child: DropDownSelector(
+                          titleText: 'shift'.tr,
+                          selected: sharedController.selectedShift.value.id,
+                          items: sharedController.userData.value.shifts,
+                          hintText: 'select_shift'.tr,
+                          valueChanged: (newShift) {
+                            sharedController.changeShif(int.parse(newShift),true);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible:  !sharedController.isOrdersCustomFetching.value && sharedController.myOrdersCustom.isEmpty,
+                  child: Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(1000),
+                                  color: APPSTYLE_Grey20,
                                 ),
+                                width: screenwidth * .3,
+                                height: screenwidth * .3,
+                                child: Center(
+                                  child: Icon(Icons.delivery_dining_outlined,
+                                      size: screenwidth * .15,
+                                      color: APPSTYLE_Grey80),
+                                ),
+                              )
                             ],
                           ),
-                        )),
-                  ),
-                  Visibility(
-                    visible: sharedController.isOrdersFetching.value,
-                    child: Expanded(
-                        child: Container(
-                          child: ListView(
-                            children: [
-                              addVerticalSpace(APPSTYLE_SpaceMedium),
-                              for(var i=0;i<2;i++ )
-                               Container(
+                          addVerticalSpace(APPSTYLE_SpaceLarge),
+                          Text("no_orders".tr,
+                              style: getHeadlineMediumStyle(context)),
+                        ],
+                      )),
+                ),
+                Visibility(
+                  visible:  !sharedController.isOrdersCustomFetching.value && sharedController.myOrdersCustom.isNotEmpty,
+                  child: Expanded(
+                      child: Container(
+                        child: ListView(
+                          children: [
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            for(var i=0;i<sharedController.myOrdersCustom.length;i++ )
+                              InkWell(
+                                onTap:(){
+                                  Get.toNamed(AppRouteNames.ordersDetails,arguments: [i]);
+                                },
+                                child: Container(
+                                  decoration: APPSTYLE_ShadowedContainerSmallDecoration,
+                                  padding: APPSTYLE_MediumPaddingAll,
+                                  margin: APPSTYLE_LargePaddingHorizontal.copyWith(bottom: APPSTYLE_SpaceMedium),
+
+                                  child: Wrap(
+                                    runSpacing: APPSTYLE_SpaceSmall,
+                                    crossAxisAlignment: WrapCrossAlignment.start,
+                                    alignment: WrapAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          UpdateProfilePic(
+                                            isLarge:false,
+                                            borderColor: APPSTYLE_Black,
+                                            profilePictureUrl: sharedController.myOrdersCustom[i].image,
+                                          ),
+                                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+
+                                          Expanded(child: Text(
+                                            Localizations.localeOf(context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'?sharedController.myOrdersCustom[i].arabicName:
+                                            sharedController.myOrdersCustom[i].name,style: getHeadlineMediumStyle(context).copyWith(
+                                              fontWeight: APPSTYLE_FontWeightBold
+                                          ),)),
+                                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+
+                                          Text('#${sharedController.myOrdersCustom[i].queue}',style: getHeadlineLargeStyle(context),)
+
+                                        ],
+                                      ),
+                                      Divider(),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Image.asset(ASSETS_LOCATION,
+                                              width: 30),
+                                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                          Expanded(child:
+                                          Text(
+                                              "${ sharedController.myOrdersCustom[i].area}, "
+                                                  " ${sharedController.myOrdersCustom[i].street} ${'street'.tr}, "
+                                                  "${sharedController.myOrdersCustom[i].jedha.trim()!='' ?('${sharedController.myOrdersCustom[i].jedha} '):''}${sharedController.myOrdersCustom[i].jedha.trim()!=''?('${'jedha'.tr},'):''}"
+                                                  "${sharedController.myOrdersCustom[i].houseNumber !=-1?'house_number'.tr:''} : ${sharedController.myOrdersCustom[i].houseNumber!=-1 ?sharedController.myOrdersCustom[i].houseNumber:''}"
+                                                  "${sharedController.myOrdersCustom[i].floorNumber !=-1?(', ${'floor_number'.tr} : '):''} ${sharedController.myOrdersCustom[i].floorNumber!=-1 ?sharedController.myOrdersCustom[i].floorNumber:''}" ,
+
+                                              style: getHeadlineMediumStyle(context)))
+
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          width: double.infinity,
+                                          child: OutlinedButton(
+                                              style: ButtonStyle(
+                                                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: APPSTYLE_SpaceSmall,
+                                                          vertical:APPSTYLE_SpaceExtraSmall))),
+                                              child:  Row(
+                                                children: [
+                                                  Icon(sharedController.myOrdersCustom[i].status == 'pending'?
+                                                  Icons.timer_outlined :
+                                                  sharedController.myOrdersCustom[i].status == 'delivered'?
+                                                  Icons.check_circle_outline :Icons.close,color: APPSTYLE_PrimaryColor,),
+                                                  addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                                  Text(sharedController.myOrdersCustom[i].status == 'pending'?
+                                                  "pending".tr:
+                                                  sharedController.myOrdersCustom[i].status == 'delivered'?
+                                                  'delivered'.tr :'not_delivered'.tr,
+                                                      style: getHeadlineMediumStyle(context).copyWith(
+                                                          color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
+                                                      textAlign: TextAlign.center),
+                                                ],
+                                              ),
+                                              onPressed: () {
+                                              })),
+                                    ],
+                                  ),
+
+                                ),
+                              ),
+                          ],
+                        ),
+                      )),
+                ),
+                Visibility(
+                  visible: sharedController.isOrdersCustomFetching.value,
+                  child: Expanded(
+                      child: Container(
+                        child: ListView(
+                          children: [
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            for(var i=0;i<2;i++ )
+                              Container(
                                 decoration: APPSTYLE_ShadowedContainerSmallDecoration,
                                 padding: APPSTYLE_MediumPaddingAll,
                                 margin: APPSTYLE_LargePaddingHorizontal.copyWith(bottom: APPSTYLE_SpaceMedium),
@@ -266,21 +267,21 @@ class OrdersPage_Core extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                Shimmer.fromColors(
-                                  baseColor: APPSTYLE_Grey20,
-                                  highlightColor: APPSTYLE_Grey40,
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
+                                        Shimmer.fromColors(
+                                          baseColor: APPSTYLE_Grey20,
+                                          highlightColor: APPSTYLE_Grey40,
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
 
-                                    decoration:
-                                    APPSTYLE_BorderedContainerExtraSmallDecoration
-                                        .copyWith(
-                                        borderRadius: BorderRadius.circular(1000),
-                                        border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                                        color: APPSTYLE_Grey20
-                                    ),),
-                                ),
+                                            decoration:
+                                            APPSTYLE_BorderedContainerExtraSmallDecoration
+                                                .copyWith(
+                                                borderRadius: BorderRadius.circular(1000),
+                                                border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                                                color: APPSTYLE_Grey20
+                                            ),),
+                                        ),
                                         addHorizontalSpace(APPSTYLE_SpaceSmall),
 
                                         Shimmer.fromColors(
@@ -323,14 +324,14 @@ class OrdersPage_Core extends StatelessWidget {
 
                               ),
 
-                            ],
-                          ),
-                        )),
-                  ),
-                ],
-              ),
+                          ],
+                        ),
+                      )),
+                ),
+              ],
             ),
           ),
+        ),
 
       ),
     );

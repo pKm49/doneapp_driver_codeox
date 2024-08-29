@@ -23,15 +23,16 @@ class SharedController extends GetxController {
   var mobile = "".obs;
   var isUserDataFetching = false.obs;
   var isNotificationsFetching = false.obs;
-  var isOrdersFetching = false.obs;
+  var isOrdersAllFetching = false.obs;
+  var isOrdersCustomFetching = false.obs;
   var isDeviceTokenUpdating = false.obs;
   var selectedDate = DateTime.now().obs;
   var selectedShift = mapGeneralItem({}).obs;
   var userData = mapUserData({}).obs;
   var selectedOrder = mapMyOrder({}).obs;
   var notifications = <AppNotification>[].obs;
-  var myOrders = <MyOrder>[].obs;
-  var myOrdersToShow = <MyOrder>[].obs;
+  var myOrdersCustom = <MyOrder>[].obs;
+  var myOrdersAll = <MyOrder>[].obs;
   var supportNumber = "".obs;
   var selectedStatus = "all".obs;
 
@@ -61,6 +62,8 @@ class SharedController extends GetxController {
 
     bool isUpdateAvailable = await appUpdateChecker.checkStatus();
 
+    print("isUpdateAvailable");
+    print(isUpdateAvailable);
     if (!isUpdateAvailable) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -95,7 +98,7 @@ class SharedController extends GetxController {
           Get.toNamed(AppRouteNames.loginRoute);
         }
       } else {
-
+        debugPrint("no mobile set but language is set");
         Get.toNamed(AppRouteNames.loginRoute);
       }
     }
@@ -112,7 +115,8 @@ class SharedController extends GetxController {
         var sharedHttpService = SharedHttpService();
         isUserDataFetching.value = true;
         mobile.value = tMobile;
-
+        print("ref fetchUserData");
+        print(tMobile);
         userData.value = await sharedHttpService.getProfileData(tMobile);
         if (userData.value.shifts.isNotEmpty){
           selectedShift.value = userData.value.shifts[0];
@@ -121,6 +125,7 @@ class SharedController extends GetxController {
 
 
       }catch(e,st){
+        print("ref fetchUserData error");
         print(e);
         print(st);
         isUserDataFetching.value = false ;
@@ -128,7 +133,9 @@ class SharedController extends GetxController {
 
     }
   }
-
+  changeMobile(String mobile){
+    mobileTextEditingController.value.text = mobile;
+  }
   updateUserData(UserData tUserData) {
     userData.value = tUserData;
     if (userData.value.shifts.isNotEmpty){
@@ -136,15 +143,15 @@ class SharedController extends GetxController {
     }
   }
 
-  changeOrder(int index){
-    selectedOrder.value = myOrders[index];
+  changeOrder(MyOrder myOrder){
+    selectedOrder.value = myOrder;
   }
 
   saveDeviceToken() async {
     var sharedHttpService = SharedHttpService();
     String deviceToken = await getFirebaseMessagingToken();
     bool isSuccess = await sharedHttpService.saveDeviceToken(
-         mobile.value, deviceToken);
+        mobile.value, deviceToken);
   }
 
   fetchUserData(String targetRoute, String tMobile) async {
@@ -152,14 +159,22 @@ class SharedController extends GetxController {
       var sharedHttpService = SharedHttpService();
       isUserDataFetching.value = true;
       mobile.value = tMobile;
-
+      print("fetchUserData");
+      print(tMobile);
       userData.value = await sharedHttpService.getProfileData(tMobile);
       if (userData.value.shifts.isNotEmpty){
         selectedShift.value = userData.value.shifts[0];
       }
       isUserDataFetching.value = false;
+      print("userData");
+      print(userData.value.shifts.length);
 
-
+      userData.value.shifts.forEach((element) {
+        print("userData");
+        print(element.id);
+        print(element.arabicName);
+        print(element.name);
+      });
       if ( userData.value.code != "") {
         saveDeviceToken();
         if (targetRoute != "") {
@@ -171,6 +186,7 @@ class SharedController extends GetxController {
         }
       }
     }catch(e,st){
+      print("fetchUserData error");
       print(e);
       print(st);
       Future.delayed(const Duration(milliseconds: 10));
@@ -232,46 +248,42 @@ class SharedController extends GetxController {
     }
 
     if(selectedShift.value.id != -1){
-      isOrdersFetching.value = true;
+      isOrdersCustomFetching.value = true;
       if(isNavigationRequired){
         Get.toNamed(AppRouteNames.ordersList);
       }
       var sharedHttpService = SharedHttpService();
       final f = new DateFormat('yyyy-MM-dd');
-      myOrders.value =
+      myOrdersCustom.value =
       await sharedHttpService.getMyOrders( mobile.value,f.format(selectedDate.value),selectedShift.value.id.toString());
-      myOrdersToShow.value = myOrders;
       selectedStatus.value = VALIDORDER_STATUS.all.name;
       if(selectedOrder.value.id != -1 &&
-      myOrders.indexOf((element) => element.id==selectedOrder.value.id) != -1){
-        changeOrder(myOrders.indexOf((element) => element.id==selectedOrder.value.id));
+          myOrdersCustom.indexOf((element) => element.id==selectedOrder.value.id) != -1){
+        changeOrder(selectedOrder.value);
       }
 
       orderStatus.value = "";
 
-      isOrdersFetching.value = false;
+      isOrdersCustomFetching.value = false;
     }else{
-
+      print("didnt calle");
     }
 
   }
 
   Future<void> getAllMyOrders() async {
-    isOrdersFetching.value = true;
+    isOrdersAllFetching.value = true;
     var sharedHttpService = SharedHttpService();
     final f = new DateFormat('dd-MM-yyyy');
-    myOrders.value =  await sharedHttpService.getAllMyOrders( mobile.value);
+    myOrdersAll.value =  await sharedHttpService.getAllMyOrders( mobile.value);
     if(selectedOrder.value.id != -1 &&
-        myOrders.indexOf((element) => element.id==selectedOrder.value.id) != -1){
-      changeOrder(myOrders.indexOf((element) => element.id==selectedOrder.value.id));
+        myOrdersAll.indexOf((element) => element.id==selectedOrder.value.id) != -1){
+      changeOrder(selectedOrder.value);
     }
-    myOrdersToShow.value = myOrders;
     selectedStatus.value = VALIDORDER_STATUS.all.name;
 
     orderStatus.value = "";
-    selectedDate.value = DateTime.now().add(Duration(days: -1));
-    selectedShift.value = mapGeneralItem({ });
-    isOrdersFetching.value = false;
+    isOrdersAllFetching.value = false;
   }
 
   Future<void> getNotifications() async {
@@ -386,13 +398,5 @@ class SharedController extends GetxController {
 
   }
 
-  changeOrderStatusFilter(String status){
-    selectedStatus.value = status;
-    if(status=='all'){
-      myOrdersToShow.value = myOrders;
-    }else{
-      List<MyOrder> tOrders = myOrders.where((p0) => p0.status==status).toList();
-      myOrdersToShow.value = tOrders;
-    }
-  }
+
 }

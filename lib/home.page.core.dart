@@ -43,8 +43,6 @@ class HomePage_Core extends StatelessWidget {
                 visible: !sharedController.isUserDataFetching.value,
                 child: UpdateProfilePic(
                   isLarge:false,
-                  onClick: () {
-                  },
                   borderColor: APPSTYLE_Black,
                   profilePictureUrl: sharedController.userData.value.image,
                 ),
@@ -324,7 +322,7 @@ class HomePage_Core extends StatelessWidget {
                   child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                          child:sharedController.isOrdersFetching.value
+                          child:sharedController.isOrdersCustomFetching.value
                               ? LoadingAnimationWidget.staggeredDotsWave(
                             color: APPSTYLE_BackgroundWhite,
                             size: 24,
@@ -337,7 +335,7 @@ class HomePage_Core extends StatelessWidget {
                             if (sharedController.selectedShift.value.id !=-1 &&
                                 !isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1))) &&
 
-                                !sharedController.isOrdersFetching.value) {
+                                !sharedController.isOrdersCustomFetching.value) {
                               sharedController.getOrders(true);
                             }else{
                               if(isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1)))){

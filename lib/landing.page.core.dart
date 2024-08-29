@@ -28,7 +28,9 @@ class _LandingPage_CoreState extends State<LandingPage_Core>
   bool isProfileCompletionAsked = false;
   bool isFirstLaunch = true;
 
-  List<Widget> _tabList = [HomePage_Core(), OrdersPageBottomBar_Core(),MyProfilePage_Profile()];
+  List<Widget> _tabList = [HomePage_Core(),
+    // OrdersPageBottomBar_Core(),
+    MyProfilePage_Profile()];
 
   List<BottomNavigationBarItem> bottomNavigationBarItemsTwo = [
     BottomNavigationBarItem(
@@ -36,11 +38,11 @@ class _LandingPage_CoreState extends State<LandingPage_Core>
       activeIcon: Icon(Ionicons.home, size: APPSTYLE_FontSize24),
       label: "",
     ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.delivery_dining_outlined, size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Icons.delivery_dining, size: APPSTYLE_FontSize24),
-      label: "",
-    ),
+    // BottomNavigationBarItem(
+    //   icon: Icon(Icons.delivery_dining_outlined, size: APPSTYLE_FontSize24),
+    //   activeIcon: Icon(Icons.delivery_dining, size: APPSTYLE_FontSize24),
+    //   label: "",
+    // ),
     BottomNavigationBarItem(
       icon: Icon(Ionicons.person_outline, size: APPSTYLE_FontSize24),
       activeIcon: Icon(Ionicons.person, size: APPSTYLE_FontSize24),

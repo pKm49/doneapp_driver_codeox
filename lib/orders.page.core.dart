@@ -31,14 +31,14 @@ class OrdersPage_Core extends StatelessWidget {
 
     return Obx(
           ()=> Scaffold(
-        floatingActionButton: !sharedController.selectedDate.value.isBefore(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day))
-            && sharedController.selectedShift.value.id != -1
-            ? FloatingActionButton.extended(
-          onPressed: (){
-            sharedController.getAllMyOrders();
-          },
-          label: Text("View All",style: getBodyMediumStyle(context).copyWith(color: APPSTYLE_BackgroundWhite)),
-        ):Container(),
+        // floatingActionButton: !sharedController.selectedDate.value.isBefore(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day))
+        //     && sharedController.selectedShift.value.id != -1
+        //     ? FloatingActionButton.extended(
+        //   onPressed: (){
+        //     sharedController.getAllMyOrders();
+        //   },
+        //   label: Text("View All",style: getBodyMediumStyle(context).copyWith(color: APPSTYLE_BackgroundWhite)),
+        // ):Container(),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           scrolledUnderElevation: 0.0,

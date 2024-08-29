@@ -62,8 +62,6 @@ class SharedController extends GetxController {
 
     bool isUpdateAvailable = await appUpdateChecker.checkStatus();
 
-    print("isUpdateAvailable");
-    print(isUpdateAvailable);
     if (!isUpdateAvailable) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -98,7 +96,6 @@ class SharedController extends GetxController {
           Get.toNamed(AppRouteNames.loginRoute);
         }
       } else {
-        debugPrint("no mobile set but language is set");
         Get.toNamed(AppRouteNames.loginRoute);
       }
     }
@@ -115,8 +112,7 @@ class SharedController extends GetxController {
         var sharedHttpService = SharedHttpService();
         isUserDataFetching.value = true;
         mobile.value = tMobile;
-        print("ref fetchUserData");
-        print(tMobile);
+
         userData.value = await sharedHttpService.getProfileData(tMobile);
         if (userData.value.shifts.isNotEmpty){
           selectedShift.value = userData.value.shifts[0];
@@ -125,8 +121,7 @@ class SharedController extends GetxController {
 
 
       }catch(e,st){
-        print("ref fetchUserData error");
-        print(e);
+         print(e);
         print(st);
         isUserDataFetching.value = false ;
       }
@@ -159,15 +154,12 @@ class SharedController extends GetxController {
       var sharedHttpService = SharedHttpService();
       isUserDataFetching.value = true;
       mobile.value = tMobile;
-      print("fetchUserData");
-      print(tMobile);
+
       userData.value = await sharedHttpService.getProfileData(tMobile);
       if (userData.value.shifts.isNotEmpty){
         selectedShift.value = userData.value.shifts[0];
       }
       isUserDataFetching.value = false;
-      print("userData");
-      print(userData.value.shifts.length);
 
       userData.value.shifts.forEach((element) {
         print("userData");
@@ -186,8 +178,7 @@ class SharedController extends GetxController {
         }
       }
     }catch(e,st){
-      print("fetchUserData error");
-      print(e);
+       print(e);
       print(st);
       Future.delayed(const Duration(milliseconds: 10));
       refetchUserData();

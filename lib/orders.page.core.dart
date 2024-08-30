@@ -172,9 +172,10 @@ class OrdersPage_Core extends StatelessWidget {
                                         APPSTYLE_GuideRed:
                                         status.name == 'delivered'?
                                         APPSTYLE_WhatsappGreen:APPSTYLE_PrimaryColorBg),
-                                        width: 25,
+                                        width: 40,
                                         height: 25,
-                                        child: Center(
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
                                           child: Text((
                                               status.name=="pending"?sharedController.pendingCount.toString():
                                               status.name=="delivered"?sharedController.deliveredCount.toString():

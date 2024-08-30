@@ -1,1 +1,1 @@
-enum VALIDORDER_STATUS { all, pending,delivered,not_delivered }
+enum VALIDORDER_STATUS {  pending, delivered,not_delivered }

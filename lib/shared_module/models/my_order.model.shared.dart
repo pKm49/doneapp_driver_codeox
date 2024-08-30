@@ -1,9 +1,12 @@
 class MyOrder {
   final int id;
+  final String customerId;
   final String image;
   final String name;
   final String arabicName;
   final String area;
+  final String blockArabic;
+  final String block;
   final String areaArabic;
   final String street;
   final String jedha;
@@ -27,6 +30,9 @@ class MyOrder {
     required this.status,
     required this.mobile,
     required this.queue,
+    required this.customerId,
+    required this.block,
+    required this.blockArabic,
   });
 }
 
@@ -36,8 +42,19 @@ MyOrder mapMyOrder(dynamic payload) {
     arabicName: (payload["arabic_name"] != null  && payload["arabic_name"] != false)  ? payload["arabic_name"].toString() : "",
     image: payload["image"] != null ? payload["image"].toString() : "",
     queue: (payload["queue_no"] != null && payload["queue_no"] != '')? payload["queue_no"]: -1,
-    id: payload["id"] ?? -1,
+    id: (payload["id"] != null && payload["id"] != '')? payload["id"]: -1,
+    customerId: (payload["customer_id"] != null && payload["customer_id"] != '')? payload["customer_id"].toString(): "",
     street: payload["street"] ?? "",
+    block: payload["block"] != null
+        ? payload["block"].toString() == 'false'
+        ? ''
+        : payload["block"].toString()
+        : "",
+    blockArabic: payload["block_arabic"] != null
+        ? payload["block_arabic"].toString() == 'false'
+        ? ''
+        : payload["block_arabic"].toString()
+        : "",
     area: payload["area"] != null
         ? payload["area"].toString() == 'false'
         ? ''

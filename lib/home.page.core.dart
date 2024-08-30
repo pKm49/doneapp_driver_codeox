@@ -37,107 +37,6 @@ class HomePage_Core extends StatelessWidget {
           elevation: 0.0,
           toolbarHeight: 70,
           scrolledUnderElevation: 0.0,
-          title: Row(
-            children: [
-              Visibility(
-                visible: !sharedController.isUserDataFetching.value,
-                child: UpdateProfilePic(
-                  isLarge:false,
-                  borderColor: APPSTYLE_Black,
-                  profilePictureUrl: sharedController.userData.value.image,
-                ),
-              ),
-              Visibility(
-                visible:  sharedController.isUserDataFetching.value,
-                child: Shimmer.fromColors(
-                  baseColor: APPSTYLE_Grey20,
-                  highlightColor: APPSTYLE_Grey40,
-                  child: Container(
-                    height: screenwidth * .11,
-                    width: screenwidth * .11,
-
-                    decoration:
-                    APPSTYLE_BorderedContainerExtraSmallDecoration
-                        .copyWith(
-                        borderRadius: BorderRadius.circular(1000),
-                        border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                        color: APPSTYLE_Grey20
-                    ),),
-                ),),
-              addHorizontalSpace(APPSTYLE_SpaceSmall),
-              Visibility(
-                visible:  sharedController.isUserDataFetching.value,
-                child: Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Shimmer.fromColors(
-                          baseColor: APPSTYLE_Grey20,
-                          highlightColor: APPSTYLE_Grey40,
-                          child: Container(
-
-                            width: screenwidth*.4,
-                            height: 22,
-
-                            decoration:
-                            APPSTYLE_BorderedContainerExtraSmallDecoration
-                                .copyWith(
-                                borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-                                border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                                color: APPSTYLE_Grey20
-                            ),),
-                        ),
-                        addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                        Shimmer.fromColors(
-                          baseColor: APPSTYLE_Grey20,
-                          highlightColor: APPSTYLE_Grey40,
-                          child: Container(
-
-                            width: screenwidth*.3,
-                            height: 16,
-
-                            decoration:
-                            APPSTYLE_BorderedContainerExtraSmallDecoration
-                                .copyWith(
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
-                                color: APPSTYLE_Grey20
-                            ),),
-                        ),
-                      ],
-                    )),
-              ),
-              Visibility(
-                visible: !sharedController.isUserDataFetching.value,
-                child: Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FittedBox(
-                          child: Text(
-                            'hey_username'.tr.replaceAll('username',sharedController.userData.value.name),
-                            textAlign: TextAlign.start,
-                            style: getBodyMediumStyle(context).copyWith(
-                                fontWeight: APPSTYLE_FontWeightBold),
-                          ),
-                          fit: BoxFit.scaleDown,
-                        ),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            getGreetingText().tr,
-                            textAlign: TextAlign.start,
-                            style: getLabelLargeStyle(context).copyWith(
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
-            ],
-          ),
           actions: [
             InkWell(
               onTap: () {
@@ -157,96 +56,212 @@ class HomePage_Core extends StatelessWidget {
             child: ListView(
               children: [
                 addVerticalSpace(APPSTYLE_SpaceMedium ),
-                Container(
-                  decoration:
-                  APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
-                      boxShadow: [],
-                      color: APPSTYLE_Black),
-                  padding: APPSTYLE_MediumPaddingAll,
-                  margin: APPSTYLE_LargePaddingHorizontal,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.delivery_dining,
-                        color: APPSTYLE_BackgroundWhite,
-                      ),
-                      addHorizontalSpace(APPSTYLE_SpaceMedium),
-                      Expanded(
-                          child: Text("total_orders".tr,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite))),
-                      Text(
-                        sharedController.userData.value.totalOrders.toString(),
-                        style: getHeadlineLargeStyle(context)
-                            .copyWith(color: APPSTYLE_BackgroundWhite),
-                      )
-                    ],
-                  ),
-                ),
-                addVerticalSpace(APPSTYLE_SpaceMedium),
-                Container(
-                  decoration:
-                  APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
-                      boxShadow: [],
-                      color: APPSTYLE_GuideRed),
-                  padding: APPSTYLE_MediumPaddingAll,
-                  margin: APPSTYLE_LargePaddingHorizontal,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        color: APPSTYLE_BackgroundWhite,
-                      ),
-                      addHorizontalSpace(APPSTYLE_SpaceMedium),
-                      Expanded(
-                          child: Text("pending".tr,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite))),
-                      Text(
-                        sharedController.userData.value.pendingOrders.toString(),
-                        style: getHeadlineLargeStyle(context)
-                            .copyWith(color: APPSTYLE_BackgroundWhite),
-                      )
-                    ],
-                  ),
-                ),
-                addVerticalSpace(APPSTYLE_SpaceMedium),
-                Container(
-                  decoration:
-                  APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
-                      boxShadow: [],
-                      color: APPSTYLE_GuideGreen),
-                  padding: APPSTYLE_MediumPaddingAll,
-                  margin: APPSTYLE_LargePaddingHorizontal,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        color: APPSTYLE_BackgroundWhite,
-                      ),
-                      addHorizontalSpace(APPSTYLE_SpaceMedium),
-                      Expanded(
-                          child: Text("completed".tr,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite))),
-                      Text(
-                        sharedController.userData.value.deliveredOrders.toString(),
-                        style: getHeadlineLargeStyle(context)
-                            .copyWith(color: APPSTYLE_BackgroundWhite),
-                      )
-                    ],
-                  ),
-                ),
+                // Container(
+                //   decoration:
+                //   APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                //       boxShadow: [],
+                //       color: APPSTYLE_Black),
+                //   padding: APPSTYLE_MediumPaddingAll,
+                //   margin: APPSTYLE_LargePaddingHorizontal,
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.delivery_dining,
+                //         color: APPSTYLE_BackgroundWhite,
+                //       ),
+                //       addHorizontalSpace(APPSTYLE_SpaceMedium),
+                //       Expanded(
+                //           child: Text("total_orders".tr,
+                //               style: getHeadlineMediumStyle(context).copyWith(
+                //                   color: APPSTYLE_BackgroundWhite))),
+                //       Text(
+                //         sharedController.userData.value.totalOrders.toString(),
+                //         style: getHeadlineLargeStyle(context)
+                //             .copyWith(color: APPSTYLE_BackgroundWhite),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // addVerticalSpace(APPSTYLE_SpaceMedium),
+                // Container(
+                //   decoration:
+                //   APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                //       boxShadow: [],
+                //       color: APPSTYLE_GuideRed),
+                //   padding: APPSTYLE_MediumPaddingAll,
+                //   margin: APPSTYLE_LargePaddingHorizontal,
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.timer_outlined,
+                //         color: APPSTYLE_BackgroundWhite,
+                //       ),
+                //       addHorizontalSpace(APPSTYLE_SpaceMedium),
+                //       Expanded(
+                //           child: Text("pending".tr,
+                //               style: getHeadlineMediumStyle(context).copyWith(
+                //                   color: APPSTYLE_BackgroundWhite))),
+                //       Text(
+                //         sharedController.userData.value.pendingOrders.toString(),
+                //         style: getHeadlineLargeStyle(context)
+                //             .copyWith(color: APPSTYLE_BackgroundWhite),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // addVerticalSpace(APPSTYLE_SpaceMedium),
+                // Container(
+                //   decoration:
+                //   APPSTYLE_ShadowedContainerExtraSmallDecoration.copyWith(
+                //       boxShadow: [],
+                //       color: APPSTYLE_GuideGreen),
+                //   padding: APPSTYLE_MediumPaddingAll,
+                //   margin: APPSTYLE_LargePaddingHorizontal,
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.check_circle_outline,
+                //         color: APPSTYLE_BackgroundWhite,
+                //       ),
+                //       addHorizontalSpace(APPSTYLE_SpaceMedium),
+                //       Expanded(
+                //           child: Text("completed".tr,
+                //               style: getHeadlineMediumStyle(context).copyWith(
+                //                   color: APPSTYLE_BackgroundWhite))),
+                //       Text(
+                //         sharedController.userData.value.deliveredOrders.toString(),
+                //         style: getHeadlineLargeStyle(context)
+                //             .copyWith(color: APPSTYLE_BackgroundWhite),
+                //       )
+                //     ],
+                //   ),
+                // ),
 
-                addVerticalSpace(APPSTYLE_SpaceLarge*2),
+                Visibility(
+                  visible: !sharedController.isUserDataFetching.value,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UpdateProfilePic(
+                        isLarge:true,
+                        borderColor: APPSTYLE_Black,
+                        profilePictureUrl: sharedController.userData.value.image,
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible:  sharedController.isUserDataFetching.value,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Shimmer.fromColors(
+                        baseColor: APPSTYLE_Grey20,
+                        highlightColor: APPSTYLE_Grey40,
+                        child: Container(
+                          height: screenwidth * .3,
+                          width: screenwidth * .3,
+
+                          decoration:
+                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                              .copyWith(
+                              borderRadius: BorderRadius.circular(1000),
+                              border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                              color: APPSTYLE_Grey20
+                          ),),
+                      ),
+                    ],
+                  ),),
+
+                Visibility(
+                  visible: sharedController.isUserDataFetching.value,
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Shimmer.fromColors(
+                        baseColor: APPSTYLE_Grey20,
+                        highlightColor: APPSTYLE_Grey40,
+                        child: Container(
+
+                          width: screenwidth*.4,
+                          height: 22,
+
+                          decoration:
+                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                              .copyWith(
+                              borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+                              border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                              color: APPSTYLE_Grey20
+                          ),),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: sharedController.isUserDataFetching.value,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Shimmer.fromColors(
+                        baseColor: APPSTYLE_Grey20,
+                        highlightColor: APPSTYLE_Grey40,
+                        child: Container(
+
+                          width: screenwidth*.3,
+                          height: 16,
+
+                          decoration:
+                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                              .copyWith(
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                              color: APPSTYLE_Grey20
+                          ),),
+                      ),
+                    ],
+                  ),
+                ),
+                addVerticalSpace(APPSTYLE_SpaceSmall),
+                Visibility(
+                  visible: !sharedController.isUserDataFetching.value,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        sharedController.userData.value.name,
+                        textAlign: TextAlign.start,
+                        style: getHeadlineLargeStyle(context).copyWith(
+                            fontWeight: APPSTYLE_FontWeightBold),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                    visible: !sharedController.isUserDataFetching.value,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          sharedController.userData.value.code,
+                          textAlign: TextAlign.start,
+                          style: getBodyMediumStyle(context).copyWith(
+                          ),
+                        )
+                      ],
+                    )
+                ),
+                addVerticalSpace(APPSTYLE_SpaceLarge*4),
                 Padding(
                   padding: APPSTYLE_LargePaddingHorizontal,
                   child: Text("find_orders_assigned".tr,
-                      textAlign: TextAlign.start,
-                      style: getHeadlineLargeStyle(context).copyWith(
-
+                      textAlign: TextAlign.center,
+                      style: getHeadlineMediumStyle(context).copyWith(
+                          fontWeight: APPSTYLE_FontWeightBold,
                           color: APPSTYLE_Grey80)),
                 ),
+
+
                 addVerticalSpace(APPSTYLE_SpaceMedium),
 
                 InkWell(
@@ -322,7 +337,7 @@ class HomePage_Core extends StatelessWidget {
                   child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                          child:sharedController.isOrdersCustomFetching.value
+                          child:sharedController.isOrderStatusUpdating.value
                               ? LoadingAnimationWidget.staggeredDotsWave(
                             color: APPSTYLE_BackgroundWhite,
                             size: 24,
@@ -335,7 +350,7 @@ class HomePage_Core extends StatelessWidget {
                             if (sharedController.selectedShift.value.id !=-1 &&
                                 !isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1))) &&
 
-                                !sharedController.isOrdersCustomFetching.value) {
+                                !sharedController.isOrderStatusUpdating.value) {
                               sharedController.getOrders(true);
                             }else{
                               if(isSameDay(sharedController.selectedDate.value, DateTime.now().add(Duration(days: -1)))){

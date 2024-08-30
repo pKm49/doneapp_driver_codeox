@@ -31,11 +31,25 @@ class OrderDetailsPage_Core extends StatefulWidget {
 
 class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
   final sharedController = Get.find<SharedController>();
+  var getArguments = Get.arguments;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(getArguments == null){
+      showSnackbar(context, "cant_find_order".tr, "error");
+      Get.back();
+    }
+    if(getArguments[0] == null){
+      showSnackbar(context, "cant_find_order".tr, "error");
+      Get.back();
+    }
+    if(sharedController.myOrders.length<(getArguments[0]+1)){
+      showSnackbar(context, "cant_find_order".tr, "error");
+      Get.back();
+    }
+    sharedController.changeOrder(getArguments[0]);
 
   }
 

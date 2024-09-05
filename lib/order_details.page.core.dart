@@ -299,15 +299,19 @@ class _OrderDetailsPage_CoreState extends State<OrderDetailsPage_Core> {
 
   Future<void> handleCustomerContactClick(
       BuildContext buildContext,String mobile ) async {
-    final Uri callUrl =
-    Uri(scheme: 'tel', path: mobile);
-    var canLaunch = false;
-    canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
 
-    if (canLaunch) {
-      UrlLauncher.launchUrl(callUrl);
-    } else {
-      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+    final Uri dialerUrl = Uri(
+      scheme: 'tel',
+      path: mobile,
+    );
+    String webUrl = 'tel:$mobile';
+
+    try {
+      await UrlLauncher.launchUrl(dialerUrl);
+    } catch (e) {
+      print('object');
+      await UrlLauncher.launchUrl(Uri.parse(webUrl),
+          mode: UrlLauncher.LaunchMode.externalApplication);
     }
   }
 
